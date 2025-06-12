@@ -8,5 +8,7 @@ public interface ProfileService {
 
 	ProfileResponse createProfile(ProfileRequest profileRequest);
 
+	ProfileResponse getProfile(String email);
+
 
 }

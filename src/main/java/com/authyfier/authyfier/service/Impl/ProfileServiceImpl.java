@@ -34,6 +34,13 @@ public class ProfileServiceImpl implements ProfileService {
 		return convertToProfileRespone(newProfile);
 	}
 
+	@Override
+	public ProfileResponse getProfile(String email) {
+		UserEntity user = userRepositry.findByEmail(email)
+				.orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
+		return convertToProfileRespone(user);
+	}
 
 
 	private UserEntity contertToUserEntity(ProfileRequest profileRequest){
