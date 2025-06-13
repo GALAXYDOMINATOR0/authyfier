@@ -3,6 +3,7 @@ package com.authyfier.authyfier.controller;
 
 import com.authyfier.authyfier.io.ProfileRequest;
 import com.authyfier.authyfier.io.ProfileResponse;
+import com.authyfier.authyfier.service.EmailService;
 import com.authyfier.authyfier.service.ProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
 	private final ProfileService profileService;
+	private final EmailService emailService;
 
 	@PostMapping("/register")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProfileResponse register(@Valid @RequestBody ProfileRequest profileRequest) {
 		ProfileResponse response = profileService.createProfile(profileRequest);
+		emailService.sendWelcomeMail(response.getEmail(), response.getName());
 		return response;
 	}
 
